@@ -5,6 +5,7 @@ import android.app.NotificationManager;
 import android.content.Context;
 import android.os.Build;
 import android.support.v4.app.NotificationCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -34,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
 
         AdapterView.OnItemSelectedListener listener = new OnSpinnerItemSelectListener(this, totalTimeTextView,
                 cyclesNumSp, cycleDuratSp, restDuratSp, roundNumSp);
+
 
         cyclesNumSp.setOnItemSelectedListener(listener);
         cycleDuratSp.setOnItemSelectedListener(listener);

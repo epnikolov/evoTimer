@@ -1,12 +1,7 @@
 package evo.evotimer.events;
 
-import android.app.NotificationManager;
-import android.app.PendingIntent;
-import android.content.Context;
-import android.content.Intent;
 import android.media.MediaPlayer;
-import android.support.v4.app.NotificationCompat;
-import android.support.v4.app.NotificationManagerCompat;
+import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -63,12 +58,14 @@ public class OnStartStopClickListener implements View.OnClickListener {
         if(started){
             started = false;
             startB.setText("Start");
+            startB.setBackgroundColor(ContextCompat.getColor(mainActivity, R.color.colorPrimaryDark));
             timer.cancel();
             timeTextView.setText(Helper.getMinSecStrFromSec(remainingSeconds));
 
         } else {
             started = true;
             startB.setText("Stop");
+            startB.setBackgroundColor(ContextCompat.getColor(mainActivity, R.color.customRed));
             CheckBox cbNotifications = mainActivity.findViewById(R.id.notificationsCb);
             final boolean isNotifOn = cbNotifications.isChecked();
             timer = new Timer("countdown", false);
@@ -95,6 +92,7 @@ public class OnStartStopClickListener implements View.OnClickListener {
             mainActivity.runOnUiThread(() -> {
                 Button bStartStop = mainActivity.findViewById(R.id.startStopButton);
                 bStartStop.setText("Start");
+                bStartStop.setBackgroundColor(ContextCompat.getColor(mainActivity, R.color.colorPrimaryDark));
                 timeTextView.setText("DONE!");
                 if(isNotifOn) {
                     mainActivity.sendNotification("Completed!", "End.", 003);
@@ -106,7 +104,7 @@ public class OnStartStopClickListener implements View.OnClickListener {
 
         if(WorkoutEventType.CYCLE_STARTING.equals(eventType)){
             mainActivity.runOnUiThread(() -> {
-                timeTextView.setTextColor(mainActivity.getResources().getColor(R.color.holoGreen));
+                timeTextView.setTextColor(ContextCompat.getColor(mainActivity, R.color.colorPrimaryDark));
                 if(isNotifOn) {
                     mainActivity.sendNotification("GO!", "GO!", 001);
                 }
@@ -119,7 +117,7 @@ public class OnStartStopClickListener implements View.OnClickListener {
             mediaPlayerRest.start();
 
             mainActivity.runOnUiThread(() -> {
-                timeTextView.setTextColor(mainActivity.getResources().getColor(R.color.customCrey));
+                timeTextView.setTextColor(ContextCompat.getColor(mainActivity, R.color.customCrey));
                 if(isNotifOn) {
                     mainActivity.sendNotification("Rest...", "Rest...", 002);
                 }
