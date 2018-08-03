@@ -235,7 +235,7 @@
             android:layout_height="match_parent"
             android:layout_weight="10"
             android:background="@color/colorPrimaryDark"
-            android:text="Start"
+            android:text="START"
             android:textColor="@android:color/white"
             android:textSize="30sp" />
     </TableRow>

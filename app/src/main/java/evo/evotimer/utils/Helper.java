@@ -6,7 +6,8 @@ package evo.evotimer.utils;
 
 public class Helper {
 
-    public static int DELAY = 4; //in seconds
+    public static int WORK_DELAY = 4; //in seconds
+    public static int REST_DELAY = 2; //in seconds
 
     public static String getMinSecStrFromSec(int sec){
         if(sec <= 60){
@@ -18,28 +19,30 @@ public class Helper {
         return min + "min. " + remainSec + "sec.";
     }
 
-    public static WorkoutEventType getWorkoutEvent(int sec, int cycles, int cycleDurat, int restDurat){
+    public static WorkoutEventType getWorkoutEvent(int remainingSecs, int cycles, int cycleDurat, int restDurat){
 
-        if(sec < 1){
+        if(remainingSecs < 1){
             return WorkoutEventType.END;
         }
 
         int cyclesDuration = cycles * cycleDurat;
-        if(sec > DELAY && sec <= cyclesDuration + DELAY && sec % cycleDurat == DELAY){
+        if(remainingSecs > WORK_DELAY && remainingSecs <= cyclesDuration + WORK_DELAY && remainingSecs % cycleDurat == WORK_DELAY){
             return WorkoutEventType.CYCLE_PREPARE;
-        } else if(sec <= cyclesDuration && sec % cycleDurat == 0){
+        } else if(remainingSecs <= cyclesDuration && remainingSecs % cycleDurat == 0){
             return WorkoutEventType.CYCLE_STARTING;
         }
 
-        int roundDur = cyclesDuration + restDurat;
-        int remainder = sec % roundDur;
+        int roundDuration = cyclesDuration + restDurat;
+        int remainder = remainingSecs % roundDuration;
 
-        if(remainder > cycleDurat && remainder <= cyclesDuration + DELAY && remainder % cycleDurat == DELAY ){
+        if(remainder > cycleDurat && remainder <= cyclesDuration + WORK_DELAY && remainder % cycleDurat == WORK_DELAY){
             return WorkoutEventType.CYCLE_PREPARE;
         } else if(remainder <= cyclesDuration && remainder > 0 && remainder % cycleDurat == 0){
             return WorkoutEventType.CYCLE_STARTING;
-        } else if (remainder == 0){
+        } else if (remainder == REST_DELAY){
             return WorkoutEventType.REST_STARTING;
+        } else if(remainingSecs == cyclesDuration - (cycleDurat / 2) ) {
+            return WorkoutEventType.ENCOURAGE;
         } else {
             return WorkoutEventType.NOTHING;
         }

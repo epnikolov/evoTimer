@@ -66,7 +66,8 @@ public class MainActivity extends AppCompatActivity {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, NOTIF_CHANNNEL)
                         .setSmallIcon(R.drawable.not)
                         .setContentTitle(notifTitle)
-                        .setContentText(notifText);
+                        .setContentText(notifText)
+                        .setAutoCancel(true);
 
         NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 

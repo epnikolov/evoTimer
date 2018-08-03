@@ -33,6 +33,7 @@ public class OnStartStopClickListener implements View.OnClickListener {
     private MediaPlayer mediaPlayerStartCycle;
     private MediaPlayer mediaPlayerRest;
     private MediaPlayer mediaPlayerEnd;
+    private MediaPlayer mediaPlayerEncourage;
 
     public OnStartStopClickListener(MainActivity mainActivity, TextView timeTextView,
                                     Spinner cyclesViewSp, Spinner cycleDuratViewSp,
@@ -45,6 +46,7 @@ public class OnStartStopClickListener implements View.OnClickListener {
         this.mediaPlayerStartCycle = MediaPlayer.create(mainActivity.getApplicationContext(), R.raw.go);
         this.mediaPlayerRest = MediaPlayer.create(mainActivity.getApplicationContext(), R.raw.rest);
         this.mediaPlayerEnd = MediaPlayer.create(mainActivity.getApplicationContext(), R.raw.rest);
+        this.mediaPlayerEncourage = MediaPlayer.create(mainActivity.getApplicationContext(), R.raw.go);
     }
 
     @Override
@@ -57,14 +59,14 @@ public class OnStartStopClickListener implements View.OnClickListener {
 
         if(started){
             started = false;
-            startB.setText("Start");
+            startB.setText("START");
             startB.setBackgroundColor(ContextCompat.getColor(mainActivity, R.color.colorPrimaryDark));
             timer.cancel();
             timeTextView.setText(Helper.getMinSecStrFromSec(remainingSeconds));
 
         } else {
             started = true;
-            startB.setText("Stop");
+            startB.setText("STOP");
             startB.setBackgroundColor(ContextCompat.getColor(mainActivity, R.color.customRed));
             CheckBox cbNotifications = mainActivity.findViewById(R.id.notificationsCb);
             final boolean isNotifOn = cbNotifications.isChecked();
@@ -91,9 +93,9 @@ public class OnStartStopClickListener implements View.OnClickListener {
 
             mainActivity.runOnUiThread(() -> {
                 Button bStartStop = mainActivity.findViewById(R.id.startStopButton);
-                bStartStop.setText("Start");
+                bStartStop.setText("START");
                 bStartStop.setBackgroundColor(ContextCompat.getColor(mainActivity, R.color.colorPrimaryDark));
-                timeTextView.setText("DONE!");
+                timeTextView.setText("WELL DONE!");
                 if(isNotifOn) {
                     mainActivity.sendNotification("Completed!", "End.", 003);
                 }
@@ -122,6 +124,8 @@ public class OnStartStopClickListener implements View.OnClickListener {
                     mainActivity.sendNotification("Rest...", "Rest...", 002);
                 }
             });
+        } else if (WorkoutEventType.ENCOURAGE.equals(eventType)){
+            mediaPlayerEncourage.start();
         }
 
         mainActivity.runOnUiThread(() -> {
