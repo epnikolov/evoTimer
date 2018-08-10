@@ -45,8 +45,8 @@ public class OnStartStopClickListener implements View.OnClickListener {
         this.restDuratCycleSp = restDuratCycleSp;
         this.mediaPlayerStartCycle = MediaPlayer.create(mainActivity.getApplicationContext(), R.raw.go);
         this.mediaPlayerRest = MediaPlayer.create(mainActivity.getApplicationContext(), R.raw.rest);
-        this.mediaPlayerEnd = MediaPlayer.create(mainActivity.getApplicationContext(), R.raw.rest);
-        this.mediaPlayerEncourage = MediaPlayer.create(mainActivity.getApplicationContext(), R.raw.go);
+        this.mediaPlayerEnd = MediaPlayer.create(mainActivity.getApplicationContext(), R.raw.stop);
+        this.mediaPlayerEncourage = MediaPlayer.create(mainActivity.getApplicationContext(), R.raw.encourage);
     }
 
     @Override
@@ -68,8 +68,8 @@ public class OnStartStopClickListener implements View.OnClickListener {
             started = true;
             startB.setText("STOP");
             startB.setBackgroundColor(ContextCompat.getColor(mainActivity, R.color.customRed));
-            CheckBox cbNotifications = mainActivity.findViewById(R.id.notificationsCb);
-            final boolean isNotifOn = cbNotifications.isChecked();
+//            CheckBox cbNotifications = mainActivity.findViewById(R.id.notificationsCb);
+//            final boolean isNotifOn = cbNotifications.isChecked();
             timer = new Timer("countdown", false);
             timer.scheduleAtFixedRate(new TimerTask() {
                 @Override
@@ -77,14 +77,14 @@ public class OnStartStopClickListener implements View.OnClickListener {
                     remainingSeconds--;
                     WorkoutEventType eventType = Helper.getWorkoutEvent(remainingSeconds, cycles, cycleDurat, restDurat);
 
-                    handleEvent(eventType, isNotifOn);
+                    handleEvent(eventType);
 
                 }
             }, 0, 1000);
         }
     }
 
-    private void handleEvent(WorkoutEventType eventType, boolean isNotifOn){
+    private void handleEvent(WorkoutEventType eventType){
         if(WorkoutEventType.END.equals(eventType)){
             timer.cancel();
             started = false;
@@ -96,9 +96,9 @@ public class OnStartStopClickListener implements View.OnClickListener {
                 bStartStop.setText("START");
                 bStartStop.setBackgroundColor(ContextCompat.getColor(mainActivity, R.color.colorPrimaryDark));
                 timeTextView.setText("WELL DONE!");
-                if(isNotifOn) {
-                    mainActivity.sendNotification("Completed!", "End.", 003);
-                }
+//                if(isNotifOn) {
+//                    mainActivity.sendNotification("Completed!", "End.", 003);
+//                }
             });
 
             return;
@@ -107,9 +107,9 @@ public class OnStartStopClickListener implements View.OnClickListener {
         if(WorkoutEventType.CYCLE_STARTING.equals(eventType)){
             mainActivity.runOnUiThread(() -> {
                 timeTextView.setTextColor(ContextCompat.getColor(mainActivity, R.color.colorPrimaryDark));
-                if(isNotifOn) {
-                    mainActivity.sendNotification("GO!", "GO!", 001);
-                }
+//                if(isNotifOn) {
+//                    mainActivity.sendNotification("GO!", "GO!", 001);
+//                }
             });
 
         } else if(WorkoutEventType.CYCLE_PREPARE.equals(eventType)){
@@ -120,9 +120,9 @@ public class OnStartStopClickListener implements View.OnClickListener {
 
             mainActivity.runOnUiThread(() -> {
                 timeTextView.setTextColor(ContextCompat.getColor(mainActivity, R.color.customCrey));
-                if(isNotifOn) {
-                    mainActivity.sendNotification("Rest...", "Rest...", 002);
-                }
+//                if(isNotifOn) {
+//                    mainActivity.sendNotification("Rest...", "Rest...", 002);
+//                }
             });
         } else if (WorkoutEventType.ENCOURAGE.equals(eventType)){
             mediaPlayerEncourage.start();

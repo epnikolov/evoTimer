@@ -9,6 +9,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.Spinner;
@@ -28,9 +29,13 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Spinner cyclesNumSp = findViewById(R.id.cyclesNumSp);
+        cyclesNumSp.setSelection(2);
         Spinner cycleDuratSp = findViewById(R.id.cycleDuratSp);
+        cycleDuratSp.setSelection(1);
         Spinner restDuratSp = findViewById(R.id.restDuratSp);
+        restDuratSp.setSelection(3);
         Spinner roundNumSp = findViewById(R.id.roundNumSp);
+        roundNumSp.setSelection(2);
         TextView totalTimeTextView = findViewById(R.id.totalTimeTextView);
 
         AdapterView.OnItemSelectedListener listener = new OnSpinnerItemSelectListener(this, totalTimeTextView,
@@ -61,23 +66,23 @@ public class MainActivity extends AppCompatActivity {
         this.totalSeconds = totalSeconds;
     }
 
-    public void sendNotification(String notifTitle, String notifText, int notifId) {
-
-        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, NOTIF_CHANNNEL)
-                        .setSmallIcon(R.drawable.not)
-                        .setContentTitle(notifTitle)
-                        .setContentText(notifText)
-                        .setAutoCancel(true);
-
-        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationChannel channel = new NotificationChannel(NOTIF_CHANNNEL,
-                    "Timer notification channel",
-                    NotificationManager.IMPORTANCE_DEFAULT);
-            mNotificationManager.createNotificationChannel(channel);
-        }
-
-        mNotificationManager.notify(notifId, mBuilder.build());
-    }
+//    public void sendNotification(String notifTitle, String notifText, int notifId) {
+//
+//        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this, NOTIF_CHANNNEL)
+//                        .setSmallIcon(R.drawable.not)
+//                        .setContentTitle(notifTitle)
+//                        .setContentText(notifText)
+//                        .setAutoCancel(true);
+//
+//        NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+//
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+//            NotificationChannel channel = new NotificationChannel(NOTIF_CHANNNEL,
+//                    "Timer notification channel",
+//                    NotificationManager.IMPORTANCE_DEFAULT);
+//            mNotificationManager.createNotificationChannel(channel);
+//        }
+//
+//        mNotificationManager.notify(notifId, mBuilder.build());
+//    }
 }

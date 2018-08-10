@@ -6,8 +6,8 @@ package evo.evotimer.utils;
 
 public class Helper {
 
-    public static int WORK_DELAY = 4; //in seconds
-    public static int REST_DELAY = 2; //in seconds
+    public static int WORK_DELAY = 5; //in seconds
+    public static int REST_DELAY = 1; //in seconds
 
     public static String getMinSecStrFromSec(int sec){
         if(sec <= 60){
@@ -21,8 +21,12 @@ public class Helper {
 
     public static WorkoutEventType getWorkoutEvent(int remainingSecs, int cycles, int cycleDurat, int restDurat){
 
-        if(remainingSecs < 1){
-            return WorkoutEventType.END;
+        if(remainingSecs < WORK_DELAY + 3){
+            if(remainingSecs == 2) {
+                return WorkoutEventType.END;
+            } else {
+                return WorkoutEventType.NOTHING;
+            }
         }
 
         int cyclesDuration = cycles * cycleDurat;
