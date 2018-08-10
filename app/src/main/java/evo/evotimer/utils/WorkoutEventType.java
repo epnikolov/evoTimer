@@ -8,6 +8,7 @@ public enum WorkoutEventType {
     CYCLE_STARTING,
     CYCLE_PREPARE,
     REST_STARTING,
+    END_PREPARE,
     END,
     ENCOURAGE,
     NOTHING

@@ -4,7 +4,6 @@ import android.media.MediaPlayer;
 import android.support.v4.content.ContextCompat;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -89,7 +88,6 @@ public class OnStartStopClickListener implements View.OnClickListener {
             timer.cancel();
             started = false;
             remainingSeconds = mainActivity.getTotalSeconds();
-            mediaPlayerEnd.start();
 
             mainActivity.runOnUiThread(() -> {
                 Button bStartStop = mainActivity.findViewById(R.id.startStopButton);
@@ -124,6 +122,8 @@ public class OnStartStopClickListener implements View.OnClickListener {
 //                    mainActivity.sendNotification("Rest...", "Rest...", 002);
 //                }
             });
+        } else if(WorkoutEventType.END_PREPARE.equals(eventType)){
+            mediaPlayerEnd.start();
         } else if (WorkoutEventType.ENCOURAGE.equals(eventType)){
             mediaPlayerEncourage.start();
         }
